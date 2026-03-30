@@ -1,0 +1,2 @@
+﻿tsconfig.json(24,18): error TS6306: Referenced project 'C:/Users/enzox/Documents/reflect-saas/tsconfig.node.json' must have setting "composite": true.
+tsconfig.json(24,18): error TS6310: Referenced project 'C:/Users/enzox/Documents/reflect-saas/tsconfig.node.json' may not disable emit.

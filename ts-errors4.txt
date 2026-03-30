@@ -1,0 +1,13 @@
+﻿src/App.tsx(8,277): error TS6133: 'Key' is declared but its value is never read.
+src/pages/AboutUs.tsx(3,39): error TS2305: Module '"lucide-react"' has no exported member 'Twitter'.
+src/pages/AboutUs.tsx(3,48): error TS2305: Module '"lucide-react"' has no exported member 'Linkedin'.
+src/pages/AboutUs.tsx(3,58): error TS2305: Module '"lucide-react"' has no exported member 'Github'.
+src/pages/AboutUs.tsx(3,106): error TS6133: 'Briefcase' is declared but its value is never read.
+src/pages/ContactUs.tsx(3,31): error TS2305: Module '"lucide-react"' has no exported member 'Twitter'.
+src/pages/ContactUs.tsx(3,40): error TS2305: Module '"lucide-react"' has no exported member 'Linkedin'.
+src/pages/ContactUs.tsx(3,50): error TS2305: Module '"lucide-react"' has no exported member 'Github'.
+src/pages/SignIn.tsx(4,10): error TS2724: '"lucide-react"' has no exported member named 'Chrome'. Did you mean 'Home'?
+src/pages/SignIn.tsx(4,18): error TS2305: Module '"lucide-react"' has no exported member 'Github'.
+src/pages/SignUp.tsx(3,10): error TS2724: '"lucide-react"' has no exported member named 'Chrome'. Did you mean 'Home'?
+src/pages/SignUp.tsx(3,18): error TS2305: Module '"lucide-react"' has no exported member 'Github'.
+vite.config.ts(3,25): error TS2307: Cannot find module '@tailwindcss/vite' or its corresponding type declarations.
