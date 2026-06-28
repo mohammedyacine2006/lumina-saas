@@ -1,11 +1,11 @@
 // @license
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ReactLenis } from 'lenis/react';
-import { Routes, Route, Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, Lock, Network, Zap, Search, Smartphone, Menu, CheckCircle2, Shield, ZapIcon, Globe, Home, BarChart2, Folder, Settings, ChevronDown, Bell, Plus, ArrowLeft, FileText, Link as LinkIcon, Hash, ArrowUpRight, MousePointer2, MessageSquare, Users, Cpu, Key, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import { ArrowRight, Sparkles, Lock, Network, Zap, Search, Smartphone, Menu, X, CheckCircle2, Shield, ZapIcon, Globe, Home, BarChart2, Folder, Settings, ChevronDown, Bell, Plus, ArrowLeft, FileText, Link as LinkIcon, Hash, ArrowUpRight, MousePointer2, MessageSquare, Users, Cpu, Key, ChevronLeft, ChevronRight } from 'lucide-react';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import SignIn from './pages/SignIn';
@@ -39,8 +39,15 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => (
 );
 
 export default function App() {
+    const { pathname } = useLocation();
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [openIndex, setOpenIndex] = useState<number | null>(null);
     const [testimonialIndex, setTestimonialIndex] = useState(0);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        setIsMobileMenuOpen(false);
+    }, [pathname]);
 
     const testimonials = [
         {
@@ -159,10 +166,85 @@ export default function App() {
                                 Get Started
                             </Link>
                         </div>
-                        <button className="md:hidden text-gray-400">
-                            <Menu className="w-5 h-5" />
+                        <button 
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+                            className="md:hidden text-gray-400 hover:text-white transition-colors focus:outline-none"
+                        >
+                            {isMobileMenuOpen ? (
+                                <X className="w-5 h-5" />
+                            ) : (
+                                <Menu className="w-5 h-5" />
+                            )}
                         </button>
                     </div>
+
+                    {/* Mobile Menu */}
+                    <AnimatePresence>
+                        {isMobileMenuOpen && (
+                            <motion.div 
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                className="md:hidden border-t border-white/10 bg-[#0a0a0a]/95 backdrop-blur-xl overflow-hidden"
+                            >
+                                <div className="px-6 py-4 flex flex-col gap-4">
+                                    <a 
+                                        href="#features" 
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="text-sm font-medium text-gray-400 hover:text-white transition-colors py-1"
+                                    >
+                                        Features
+                                    </a>
+                                    <a 
+                                        href="#how-it-works" 
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="text-sm font-medium text-gray-400 hover:text-white transition-colors py-1"
+                                    >
+                                        How it Works
+                                    </a>
+                                    <a 
+                                        href="#pricing" 
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="text-sm font-medium text-gray-400 hover:text-white transition-colors py-1"
+                                    >
+                                        Pricing
+                                    </a>
+                                    
+                                    <div className="h-[1px] w-full bg-white/10 my-1" />
+                                    
+                                    <Link 
+                                        to="/about" 
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="text-sm font-medium text-gray-400 hover:text-white transition-colors py-1"
+                                    >
+                                        About Us
+                                    </Link>
+                                    <Link 
+                                        to="/contact" 
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="text-sm font-medium text-gray-400 hover:text-white transition-colors py-1"
+                                    >
+                                        Contact
+                                    </Link>
+                                    <Link 
+                                        to="/signin" 
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="text-sm font-medium text-gray-400 hover:text-white transition-colors py-1"
+                                    >
+                                        Sign In
+                                    </Link>
+                                    <Link 
+                                        to="/signup" 
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="bg-gradient-to-r from-fuchsia-600 to-cyan-500 text-white px-4 py-2.5 rounded-xl text-sm font-medium hover:opacity-90 transition-opacity shadow-[0_0_15px_rgba(168,85,247,0.3)] text-center mt-2"
+                                    >
+                                        Get Started
+                                    </Link>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </nav>
 
                 <AnimatePresence mode="wait">
@@ -171,25 +253,15 @@ export default function App() {
                             <Route path="/" element={
                                 <main>
                                     {/* 2. HERO SECTION */}
-                                    <section className="relative pt-24 pb-16 mt-12 px-6 min-h-screen flex flex-col items-center">
-                                        {/* Stars Background Pattern */}
-                                        <div
-                                            className="absolute inset-0 z-0 opacity-[0.15] transform-gpu pointer-events-none"
-                                            style={{ backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 1px)', backgroundSize: '40px 40px' }}
-                                        />
+                                    <section className="relative overflow-hidden pt-24 pb-16 mt-12 px-6 min-h-screen flex flex-col items-center bg-black">
+                                        {/* 1. Grid Pattern Layer */}
+                                        <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
 
-                                        {/* Background Image Container */}
-                                        <div
-                                            className="absolute inset-0 z-0 bg-black transform-gpu pointer-events-none will-change-transform"
-                                            style={{
-                                                backgroundImage: `radial-gradient(ellipse at bottom, rgba(168, 85, 247, 0.4) 0%, rgba(6, 182, 212, 0.2) 30%, transparent 70%)`,
-                                                backgroundSize: 'cover',
-                                                backgroundPosition: 'center bottom',
-                                                backgroundRepeat: 'no-repeat',
-                                            }}
-                                        />
+                                        {/* 2. Ambient Glow Layer */}
+                                        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-fuchsia-500/10 blur-[120px] rounded-full pointer-events-none z-0" />
 
-                                        <div className="absolute inset-0 z-0 bg-gradient-to-b from-black via-black/80 to-transparent transform-gpu pointer-events-none" />
+                                        {/* 3. Bottom Gradient for smooth transition */}
+                                        <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black to-transparent pointer-events-none z-0" />
 
                                         <div className="relative z-10 w-full max-w-7xl mx-auto text-center flex flex-col items-center flex-1">
                                             <FadeDown>
@@ -210,9 +282,9 @@ export default function App() {
                                             </FadeDown>
                                             <FadeDown delay={0.3}>
                                                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                                                    <button className="w-full sm:w-auto bg-gradient-to-r from-fuchsia-600 to-cyan-500 text-white px-8 py-3.5 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(168,85,247,0.4)]">
+                                                    <Link to="/signup" className="w-full sm:w-auto bg-gradient-to-r from-fuchsia-600 to-cyan-500 text-white px-8 py-3.5 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(168,85,247,0.4)]">
                                                         Start Free Trial <ArrowRight className="w-4 h-4" />
-                                                    </button>
+                                                    </Link>
                                                     <button className="w-full sm:w-auto bg-white/5 text-white border border-white/10 px-8 py-3.5 rounded-lg text-sm font-medium hover:bg-white/10 transition-colors backdrop-blur-sm">
                                                         View Demo
                                                     </button>
